@@ -1,2 +1,42 @@
 
+import csv
+from datetime import datetime
+from math import sqrt
+from collections import namedtuple
+
+#(AP) - Definimos el objeto, es como un constructor de Java.
+Avistamiento = namedtuple('Avistamiento', 'fechahora, ciudad, estado, forma, duracion, comentarios, latitud, longitud')
+
+#(AP) - Definimos una función a la que le pasamos como parámetro la ruta por la que se accede al fichero csv.
+def lee_avistamientos(fichero) :
+
+    #(AP) - Queremos que la función nos devuelva una lista de avistamientos, por lo que creamos primero una lista llamada "res".
+    res = []
+
+    #(AP) - Abrimos el fichero y le vamos a llamar "f" a partir de ahora. ES BÁSICAMENTE HACER ESTO: f = open(fichero, encoding = 'utf-8');
+    #(AP) - El fichero está codificado en utf-8, necesario para leerlo. Además el método open lo pide.
+    with open(fichero, encoding = 'utf-8') as f :
+        lector = csv.reader(f)      #Esta sentencia crea una lista para cada línea del fichero.
+        next(lector)                #Salta la primera línea del fichero.
+
+        #(AP) Vamos cogiendo con un bucle los datos del fichero y los guardamos en variables para conformar un objeto "Avistamiento" al que llamamos "tupla", y este lo metemos en nuestra lista "res" (recoredemos que "res" es una lista de avistamientos).
+        #(AP) Nuestro objeto "Avistamiento" necesita todos sus atributos en Strings (tal y como se ve en el constructor) por lo que todos los datos del docuemnto que no sean String los casteamos a String.
+        for x in lector :
+            fecha_hora = x[0]
+            fechahora = datetime.strptime(fecha_hora, '%m/%d/%Y %H:%M')
+            ciudad = x[1]
+            estado = x[2]
+            forma = x[3]
+            duracion = int(x[4])
+            comentarios = x[5]
+            latitud = float(x[6])
+            longitud = float(x[7])
+            tupla = Avistamiento(fechahora, ciudad, estado, forma, duracion, comentarios, latitud, longitud)
+            res.append(tupla)
+
+        return res
+
+
+
+
 
