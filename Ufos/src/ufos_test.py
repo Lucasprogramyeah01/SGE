@@ -9,7 +9,7 @@ for a in avistamientos[:5] :
 
 #Test de la función duracion_total
 
-    
+
 
 # Test de la función comentario_mas_largo
 

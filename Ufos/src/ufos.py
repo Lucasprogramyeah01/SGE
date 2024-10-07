@@ -37,6 +37,33 @@ def lee_avistamientos(fichero) :
         return res
 
 
+#EJERCICIO 2
+#En este ejercicio, un registro es un avistamiento.
+
+def duracion_total(registros, estado):
+
+    duracionTotal = 0
+
+    for x in registros:
+        if(x.estado == estado):
+            duracionTotal += x.duracion
+
+        return duracionTotal
+
+#EJERCICIO 3
+
+def comentario_mas_largo(registros, anyo, palabra):
+
+    for x in registros:
+        if(x.comentario)
+
+
+
+
+
+
+
+
 
 
 
