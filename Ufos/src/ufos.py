@@ -54,9 +54,30 @@ def duracion_total(registros, estado):
 
 def comentario_mas_largo(registros, anyo, palabra):
 
-    for x in registros:
-        if(x.comentario)
+    """for x in registros:
+        if(x.comentario)"""
 
+
+"""EJERCICIO 4
+indexa_formas_por_mes(registros): devuelve un diccionario que indexa las
+distintas formas de avistamientos por los nombres de los meses en que se
+producen. Por ejemplo, para el mes "Enero" se tendrá un conjunto con todas las
+formas distintas observadas en dicho mes."""
+
+def indexa_formas_por_mes(registros):
+    diccionario = {}
+
+    for avistamiento in registros:
+        # Obtener el nombre del mes
+        mes = avistamiento.fechaHora.strftime('%B')
+
+        # Añadir la forma al conjunto correspondiente al mes
+        if mes not in diccionario:
+            diccionario[mes] = set()
+
+        diccionario[mes].add(avistamiento.forma)
+
+    return diccionario
 
 
 

@@ -17,7 +17,12 @@ for a in avistamientos[:5] :
 
 # Test de la función avistamientos_fechas
 
+# Llamada a la función
+resultado = indexa_formas_por_mes(avistamientos)
 
+# Imprimir el resultado
+for mes, formas in resultado.items():
+    print(f"{mes}: {formas}")
 
 # Test de la función hora_mas_avistamientos
 
