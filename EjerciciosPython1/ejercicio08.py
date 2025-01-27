@@ -21,6 +21,35 @@ Ej: 1 Peloso pierde contra 1 Orco
 
 import random
 
+def calcularDinero (x):
+    for var in range(x):
+        numAleatorio = random.randint(1,8)
+    
+    return numAleatorio*20
+
+def calcularDescuento (d):
+    for var in range(d):
+        numAleatorio = random.randint(0,5)
+    
+    return numAleatorio*10
+
+def aplicarDescuento (p, descuentoBien):
+    if(descuentoBien == 0):
+        return int(p)
+    else:
+        return int(p * (descuentoBien/100))
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+puntuacionEjercitoBien = 0
+puntuacionEjercitoMal = 0
+
+precioPeloso = 10
+precioSurenhoBueno = 20
+precioEnano = 30
+precioNumenoreano = 40
+precioElfo = 50
+
 print("¡LA TIERRA MEDIA ESTÁ EN GUERRA! Y sólo un honorable estratega como tú puede salvarnos...")
 print("(Cuando vea este símbolo (>) pulse 'Enter' para seguir con el diálogo.)")
 input("(>)")
@@ -36,26 +65,47 @@ input("\nSAURON: Lo mismo te digo, fósil decrépito. (>)")
 print("\n--------------------------------------------------------------------------------------------------------------------------")
 
 b1 = int(input("\nGANDALF: Muy bien, es hora de que nos guíes, golpea mi bastón las veces que quieras..."))
+dineroBien = calcularDinero(b1)
+print(f"HAS OBTENIDO: {dineroBien} €.")
+
+
 b2 = int(input("\nGANDALF: Y ahora grita ¡POR LAS RAZAS BONDADOSAS! las veces que creas..."))
+descuentoBien = (calcularDescuento(b2))
+print(f"HAS OBTENIDO UN DESCUENTO DEL: {descuentoBien} %.")
 
-def calcularDinero (x):
+input("(>)")
 
-    for var in range(x):
-        numAleatorio = random.randint(0,8)
-    
-    return numAleatorio*10
+precioPelosoFinal = aplicarDescuento(precioPeloso, descuentoBien)
+precioSurenhoBuenoFinal = aplicarDescuento(precioSurenhoBueno, descuentoBien)
+precioEnanoFinal = aplicarDescuento(precioEnano, descuentoBien)
+precioNumenoreanoFinal = aplicarDescuento(precioNumenoreano, descuentoBien)
+precioElfoFinal = aplicarDescuento(precioElfo, descuentoBien)
 
-def calcularDescuento (d):
+#while dineroBien > 0 :
+print(f"""
+---------------------------------------------------------
+Crea el ejército del BIEN ¡ELIGE TUS TROPAS!
+---------------------------------------------------------
+DINERO: {dineroBien} €
+DESCUENTO: {descuentoBien} %
+---------------------------------------------------------
+1 ->    {precioPelosoFinal} € - Peloso
+2 ->    {precioSurenhoBuenoFinal} € - Sureño bueno
+3 ->    {precioEnanoFinal} € - Enano
+4 ->    {precioNumenoreanoFinal} € - Númenoreano
+5 ->    {precioElfoFinal} € - Elfo
+---------------------------------------------------------
+          """)
 
-    for var in range(d):
-        numAleatorio = random.randint(0,5)
-    
-    return numAleatorio*10
+tropaElegida = input()
 
-while numSoldadosBien
+if tropaElegida == 1:
+    puntuacionEjercitoBien += 1
+    dineroBien -= precioPelosoFinal
+elif tropaElegida == 2:
+    puntuacionEjercitoBien += 2
+    dineroBien -= precioSurenhoBuenoFinal
 
-print(calcularDatos(numSoldadosBien))
-print(calcularDatos(descuentoBien))
 
 
     
