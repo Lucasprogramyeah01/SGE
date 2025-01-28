@@ -34,10 +34,7 @@ def calcularDescuento (d):
     return numAleatorio*10
 
 def aplicarDescuento (p, descuentoBien):
-    if(descuentoBien == 0):
-        return int(p)
-    else:
-        return int(p * (descuentoBien/100))
+    return int(p - (p * (descuentoBien/100)))
 
 #---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -64,14 +61,30 @@ input("\nSAURON: Lo mismo te digo, fósil decrépito. (>)")
 
 print("\n--------------------------------------------------------------------------------------------------------------------------")
 
-b1 = int(input("\nGANDALF: Muy bien, es hora de que nos guíes, golpea mi bastón las veces que quieras..."))
-dineroBien = calcularDinero(b1)
-print(f"HAS OBTENIDO: {dineroBien} €.")
+input("""
+*********************************************************
+TURNO DEL ESTRATEGA DEL BIEN (JUGADOR 1)
+*********************************************************
+(>)
+""")
 
+try:
+    b1 = int(input("GANDALF: Muy bien, es hora de que nos guíes, golpea mi bastón las veces que quieras..."))
+    dineroBien = calcularDinero(b1)
+    print(f"HAS OBTENIDO: {dineroBien} €.")
+except:
+    print("Te caes intentando dar el golpe...")
+    dineroBien = calcularDinero(1)
+    print(f"HAS OBTENIDO: {dineroBien} €.")
 
-b2 = int(input("\nGANDALF: Y ahora grita ¡POR LAS RAZAS BONDADOSAS! las veces que creas..."))
-descuentoBien = (calcularDescuento(b2))
-print(f"HAS OBTENIDO UN DESCUENTO DEL: {descuentoBien} %.")
+try:
+    b2 = int(input("\nGANDALF: Y ahora grita ¡POR LAS RAZAS BONDADOSAS! las veces que creas..."))
+    descuentoBien = (calcularDescuento(b2))
+    print(f"HAS OBTENIDO UN DESCUENTO DEL: {descuentoBien} %.")
+except:
+    print("Te ahogas intentando gritar y terminas tosiendo...")
+    descuentoBien = (calcularDescuento(1))
+    print(f"HAS OBTENIDO UN DESCUENTO DEL: {descuentoBien} %.")
 
 input("(>)")
 
@@ -81,7 +94,6 @@ precioEnanoFinal = aplicarDescuento(precioEnano, descuentoBien)
 precioNumenoreanoFinal = aplicarDescuento(precioNumenoreano, descuentoBien)
 precioElfoFinal = aplicarDescuento(precioElfo, descuentoBien)
 
-#while dineroBien > 0 :
 print(f"""
 ---------------------------------------------------------
 Crea el ejército del BIEN ¡ELIGE TUS TROPAS!
@@ -95,16 +107,51 @@ DESCUENTO: {descuentoBien} %
 4 ->    {precioNumenoreanoFinal} € - Númenoreano
 5 ->    {precioElfoFinal} € - Elfo
 ---------------------------------------------------------
-          """)
+""")
 
-tropaElegida = input()
+while dineroBien >= precioPelosoFinal:
 
-if tropaElegida == 1:
-    puntuacionEjercitoBien += 1
-    dineroBien -= precioPelosoFinal
-elif tropaElegida == 2:
-    puntuacionEjercitoBien += 2
-    dineroBien -= precioSurenhoBuenoFinal
+    try:
+        tropaElegida = int(input())
+    except:
+        tropaElegida = 1
+        print(f"Resultas inentendible... Contratas a un Peloso por error...")
+
+    if tropaElegida == 1 and dineroBien >= precioPelosoFinal:
+        puntuacionEjercitoBien += 1
+        dineroBien -= precioPelosoFinal
+        print(f"Has contratado a un Peloso.")
+    elif tropaElegida == 2 and dineroBien >= precioSurenhoBuenoFinal:
+        puntuacionEjercitoBien += 2
+        dineroBien -= precioSurenhoBuenoFinal
+        print(f"Has contratado a un Sureño bueno.")
+    elif tropaElegida == 3 and dineroBien >= precioEnanoFinal:
+            puntuacionEjercitoBien += 3
+            dineroBien -= precioEnanoFinal
+            print(f"Has contratado a un Enano.")
+    elif tropaElegida == 4 and dineroBien >= precioNumenoreanoFinal:
+            puntuacionEjercitoBien += 4
+            dineroBien -= precioNumenoreanoFinal
+            print(f"Has contratado a un Númenoreano.")
+    elif tropaElegida == 5 and dineroBien >= precioElfoFinal:
+            puntuacionEjercitoBien += 5
+            dineroBien -= precioElfoFinal
+            print(f"Has contratado a un Elfo.")
+    elif tropaElegida == 5 and dineroBien >= precioElfoFinal:
+            puntuacionEjercitoBien += 5
+            dineroBien -= precioElfoFinal
+            print(f"Has contratado a un Elfo.")
+    else:
+        puntuacionEjercitoBien += 1
+        dineroBien -= precioPelosoFinal
+        print(f"No hay ninguna tropa con ese número asignado... A cambio, contratas a un Peloso.")
+        print(f"Has contratado a un Peloso.")
+    
+    print(f"Dinero restante: {dineroBien} €.\n")
+
+print(puntuacionEjercitoBien)
+         
+
 
 
 
