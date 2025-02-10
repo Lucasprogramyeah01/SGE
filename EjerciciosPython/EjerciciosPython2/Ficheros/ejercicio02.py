@@ -13,20 +13,11 @@ Construir una función reciba el fichero de cotizaciones y devuelva un diccionar
 fichero por columnas.
 
 Construir una función que reciba el diccionario devuelto por la función anterior y cree un fichero 
-en formato csv con el mínimo, el máximo y la media de dada columna.
+en formato csv con el mínimo, el máximo y la media de cada columna.
 """
 
-import csv
-
-"""cotizacionCSV = open("./EjerciciosPython2/Ficheros/cotizacion.csv", "r+")
-
-with open("./EjerciciosPython2/Ficheros/cotizacion.csv", "r+") as cotizacionCSV:
-    lectorCSV = csv.DictReader(cotizacionCSV)
-
-    data = [column for row in csv_reader]
-print(data)
-
-print(cotizacionCSV.read())"""
+# ACLARACIÓN: ESTÁ T0DO LLENO DE APUNTES QUE HE IDO HACIENDO A MEDIDA QUE REALIZABA EL EJERCICIO, 
+# HAN SIDO VITALES PARA ENTENDER QUÉ ESTABA HACIENDO.
 
 import csv
 
@@ -41,8 +32,15 @@ def leerFichero():
 
                 "nombre": row["Nombre"],
 
-                #ACLARACIÓN: Todos los datos del fichero.csv vienen convertidos en Strings, por lo que necesitamos parsear a float aquellos que sean datos numéricos.
-                #            Para ello, cogemos 
+                # ACLARACIÓN: Todos los datos del fichero.csv vienen convertidos en Strings, por lo que necesitamos parsear a float 
+                # aquellos que sean datos numéricos.
+
+                    # Para ello, cogemos el valor de cada columna de cada fila y reemplazamos los puntos (que en el fichero
+                    # se utilizan para separar los bloques de 3 cifras de un número) por un "sin espacio" para convertir
+                    # dicho número en uno entero, y luego reemplazamos las comas por puntos, ya que en Python los números
+                    # decimales seperan su parte entera de la decimal con un punto, no con una coma.
+           
+                    # EJEMPLO: 3.345.234,56 -> 3345234,56 -> 3345234.56
 
                 "final": float(row["Final"].replace('.', '').replace(',', '.')),
                 "maximo": float(row["Máximo"].replace('.', '').replace(',', '.')),
@@ -51,36 +49,76 @@ def leerFichero():
                 "efectivo": float(row["Efectivo"].replace('.', '').replace(',', '.'))
             }
             listaCotizaciones.append(cotizacion)
-            print(row) 
+
     return listaCotizaciones
 
 def mostrarCotizacionesPorColumnas(listaCotizaciones):
     columnas = {"nombre": [], "final": [], "maximo": [], "minimo": [], "volumen": [], "efectivo": []}
     for cotizacion in listaCotizaciones:
+
+        # UNA "cotizacion" SE VE ASÍ: {'nombre': 'ACCIONA', 'final': 95.95, 'maximo': 96.75, 'minimo': 94.4, 'volumen': 84962.0, 'efectivo': 8166.11}
+
         for key in columnas.keys():
             columnas[key].append(cotizacion[key]) 
+
+        # EN UNA SOLA ITERACIÓN DEL BUCLE "for cotizacion in listaCotizaciones":
+
+            # Entramos en el bulce "for key in columnas.keys()".
+
+            # En la primera iteración de dicho bucle:
+                # key = 'nombre'
+                # Le añadimos cotizacion[key] (cotizacion['nombre'] = 'ACCIONA') a columnas[key], o sea columnas['nombre'].
+                # O sea que ahora: columnas['nombre'] = ['ACCIONA'].
+            
+            # En la segunda iteración de dicho bucle:
+                # key = 'final'
+                # Le añadimos cotizacion[final] (cotizacion['final'] = 95.95) a columnas[key], o sea columnas['final'].
+                # O sea que ahora: columnas['final'] = [95.95].
+
+            # Y así con todas las key disponibles...
+            
+        # LA ITERACIÓN ANTERIOR SERÍA LA PRIMERA DEL BUCLE "for cotizacion in listaCotizaciones", 
+        # PARA LA SEGUNDA:
+
+            # key = 'nombre'
+            # Le añadimos cotizacion['nombre'] = 'ACERINOX' a columnas['nombre'].
+            # O sea que ahora: columnas['nombre'] = ['ACCIONA', 'ACENIROX'].
+
+            # Y así con todas las key disponibles...
+
+            # EL RESULTADO SERÍA: {'nombre': ['ACCIONA', 'ACERINOX'], 'final': [95.95, 8668.0], ... }
+
     return columnas
 
-def crear_fichero_cotizaciones_por_columnas(columnas):
-    with open("./EjerciciosPython2/Ficheros/cotizaciones_por_columnas.csv", "w", newline="", encoding="utf-8") as file:
-        writer = csv.writer(file)
+def crearFicheroCotizacionesPorColumnas(columnas):
+    with open("./EjerciciosPython2/Ficheros/cotizacionesPorColumnas.csv", "w", newline="", encoding="utf-8") as cotPorColCSV:
+        writer = csv.writer(cotPorColCSV)
         writer.writerow(["Columna", "Mínimo", "Máximo", "Media"])
+
+        #Con el método writerow() escribimos las columnas que queremos en la primera fila del nuevo fichero.
+
         for key in columnas.keys():
-            if columnas[key]:  
+            if key != 'nombre':
                 writer.writerow([key, min(columnas[key]), max(columnas[key]), sum(columnas[key]) / len(columnas[key])])
-            else:
-                print(f"La columna {key} está vacía y no se puede calcular el mínimo, máximo y media.")
+        
+        # EN UNA SOLA ITERACIÓN DEL BUCLE "for key in columnas.keys():
 
-def menu():
-    cotizaciones = leerFichero()
-    columnas = mostrarCotizacionesPorColumnas(cotizaciones)
-    #crear_fichero_cotizaciones_por_columnas(columnas)
+            # Comprobar si la key de la iteración es distinta de 'nombre', ya que es la única key que no contiene
+            # una lista de datos númericos. 'nombre' contiene como valor una lista de Strings.
 
-menu()
+            # Si key == 'nombre' simplemente no se hace nada.
+            # Y si key != 'nombre:
 
+            # Introducimos en una fila el nombre, el mínimo, el máximo, y la media de la key correspondiente.
 
+            # Y así con todas las key disponibles...
 
+#---------------------------------------------------------------------------------------------------------------------
 
+cotizaciones = leerFichero()
+print(cotizaciones)
 
+columnas = mostrarCotizacionesPorColumnas(cotizaciones)
+print(f"\n{columnas}")
 
-
+crearFicheroCotizacionesPorColumnas(columnas)
